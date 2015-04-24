@@ -2,7 +2,6 @@ namespace CSC407_FinalProject.Data
 {
     using CSC407_FinalProject.Models;
     using System;
-    using System.Configuration;
     using System.Data.Entity;
     using System.Linq;
 
@@ -15,7 +14,7 @@ namespace CSC407_FinalProject.Data
         // If you wish to target a different database and/or database provider, modify the 'MessageBoardDbContext' 
         // connection string in the application configuration file.
         public MessageBoardDbContext()
-            : base("name=MessageBoardDbContext")
+            : base("name=MessageBoardDbContext1")
         {
             Database.SetInitializer<MessageBoardDbContext>(new CreateDatabaseIfNotExists<MessageBoardDbContext>());
         }
@@ -25,7 +24,10 @@ namespace CSC407_FinalProject.Data
 
         // public virtual DbSet<MyEntity> MyEntities { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Topic> Topics { get; set; }
         public virtual DbSet<Post> Posts { get; set; }
+
+        
     }
 
     //public class MyEntity
@@ -34,3 +36,5 @@ namespace CSC407_FinalProject.Data
     //    public string Name { get; set; }
     //}
 }
+
+

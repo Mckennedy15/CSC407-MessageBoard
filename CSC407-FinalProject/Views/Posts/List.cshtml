@@ -1,0 +1,41 @@
+﻿@model CSC407_FinalProject.Models.PostListingViewModel
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+
+<a href="/Posts/Create/@Model.TopicId">Create</a>
+
+<table class="table">
+    <tr>
+        <th>
+            Message
+        </th>
+        <th>
+            User
+        </th>
+        <th></th>
+    </tr>
+
+
+
+
+    @foreach (var item in Model.Posts)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PostMessage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PostUser)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.PostId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.PostId })
+            </td>
+        </tr>
+    }
+
+    </table>

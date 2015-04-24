@@ -8,121 +8,58 @@ using System.Web;
 using System.Web.Mvc;
 using CSC407_FinalProject.Data;
 using CSC407_FinalProject.Models;
+using CSC407_FinalProject.Services;
+
 
 namespace CSC407_FinalProject.Controllers
 {
     public class PostsController : Controller
     {
+        
         private MessageBoardDbContext db = new MessageBoardDbContext();
 
-        // GET: Posts
-        public ActionResult Index()
+        private PostingService postingService;
+
+        public PostsController()
         {
-            return View(db.Posts.ToList());
+            this.postingService = new PostingService();
         }
 
-        // GET: Posts/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult List(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Post post = db.Posts.Find(id);
-            if (post == null)
-            {
-                return HttpNotFound();
-            }
+            var viewModel = new PostListingViewModel();
+
+            viewModel.TopicId = id;
+            viewModel.Posts = this.postingService.GetPostsByTopicId(id);
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        public ActionResult Create(int id)
+        {
+            var post = new Post();
+            post.TopicId = id;
             return View(post);
         }
 
-        // GET: Posts/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Posts/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PostId,PostTopic,PostUser,PostMessage,TopicMessage,TopicUser")] Post post)
+        public ActionResult Create(CSC407_FinalProject.Models.Post post)
         {
-            if (ModelState.IsValid)
-            {
-                db.Posts.Add(post);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+            post.PostUser = this.HttpContext.User.Identity.Name;
+            
+            this.postingService.SavePost(post);
+            return RedirectToAction("List", new { id = post.TopicId });
 
-            return View(post);
         }
 
-        // GET: Posts/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Delete(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Post post = db.Posts.Find(id);
-            if (post == null)
-            {
-                return HttpNotFound();
-            }
-            return View(post);
+            this.postingService.DeletePost(id);
+            return RedirectToAction("Index", "Topics");
         }
 
-        // POST: Posts/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PostId,PostTopic,PostUser,PostMessage,TopicMessage,TopicUser")] Post post)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(post).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(post);
-        }
+        
 
-        // GET: Posts/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Post post = db.Posts.Find(id);
-            if (post == null)
-            {
-                return HttpNotFound();
-            }
-            return View(post);
-        }
 
-        // POST: Posts/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Post post = db.Posts.Find(id);
-            db.Posts.Remove(post);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
     }
 }

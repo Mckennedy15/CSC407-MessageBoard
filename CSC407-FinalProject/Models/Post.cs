@@ -10,10 +10,9 @@ namespace CSC407_FinalProject.Models
     {
         [Key]
         public int PostId { get; set; }
-        public string PostTopic { get; set; }
         public string PostUser { get; set; }
         public string PostMessage { get; set; }
-        public string TopicMessage { get; set; }
-        public string TopicUser { get; set; }
+
+        public int TopicId { get; set; }
     }
 }

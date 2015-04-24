@@ -1,0 +1,46 @@
+﻿@model IEnumerable<CSC407_FinalProject.Models.Topic>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TopicName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TopicMessage)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TopicUser)
+        </th>
+       
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TopicName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TopicMessage)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TopicUser)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.TopicId }) |
+            <a href="/Posts/List/@item.TopicId">View Posts</a> |
+            @Html.ActionLink("Delete", "Delete", new { id=item.TopicId })
+        </td>
+    </tr>
+}
+
+</table>
