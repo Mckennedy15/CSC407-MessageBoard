@@ -8,6 +8,8 @@
 
 <a href="/Posts/Create/@Model.TopicId">Create</a>
 
+
+
 <table class="table">
     <tr>
         <th>
@@ -32,8 +34,13 @@
                 @Html.DisplayFor(modelItem => item.PostUser)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.PostId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.PostId })
+             
+               
+                 @if (item.PostUser.ToLower() == HttpContext.Current.User.Identity.Name.ToLower() || @Model.User.Admin == true)
+                {
+                    <span> | </span>
+                    @Html.ActionLink("Delete", "Delete", new { id = item.PostId })
+                }
             </td>
         </tr>
     }

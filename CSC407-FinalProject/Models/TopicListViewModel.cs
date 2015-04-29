@@ -5,10 +5,10 @@ using System.Web;
 
 namespace CSC407_FinalProject.Models
 {
-    public class PostListingViewModel
+    public class TopicListViewModel
     {
-        public int TopicId { get; set; }
-        public List<Post> Posts { get; set; }
         public User User { get; set; }
+        public List<Topic> Topic { get; set; }
+        
     }
 }

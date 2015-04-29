@@ -6,11 +6,15 @@ using System.Web.Mvc;
 using System.Web.Security;
 using CSC407_FinalProject.Services;
 using CSC407_FinalProject.Models;
+using System.Net;
+using System.Data.Entity;
+using CSC407_FinalProject.Data;
 
 namespace CSC407_FinalProject.Controllers
     {
     public class AccountController : Controller
     {
+        private MessageBoardDbContext db = new MessageBoardDbContext();
         private IUserService userService;
 
         public AccountController()
@@ -62,6 +66,7 @@ namespace CSC407_FinalProject.Controllers
         {
 
             bool exists = this.userService.Exists(user.Username);
+            
 
             if (exists)
             {
@@ -82,5 +87,81 @@ namespace CSC407_FinalProject.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        public ActionResult Admin()
+        {
+            var allUsers = this.userService.GetUsers();
+            return View(allUsers);
+        }
+        public ActionResult Delete(int id)
+        {
+            this.userService.DeleteUser(id);
+            return RedirectToAction("Admin", "Account");
+        }
+
+        [HttpGet]
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Create(User user)
+        {
+
+            bool exists = this.userService.Exists(user.Username);
+
+
+            if (exists)
+            {
+                this.ModelState.AddModelError("", "Username already exists please pick a new one");
+                return View();
+            }
+
+            try
+            {
+                this.userService.Register(user);
+            }
+            catch (Exception ex)
+            {
+                this.ModelState.AddModelError("", "An error has occured, Don't know what it is, But it has happened!");
+                return View();
+            }
+
+
+            return RedirectToAction("Index", "Home");
+        }
+
+
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            User user = db.Users.Find(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            return View(user);
+        }
+
+
+        [HttpPost]
+        public ActionResult Edit([Bind(Include = "Id,Username,Password,Email,Admin")] User user)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Admin");
+            }
+            return View(user);
+        }
+
+
+
+
     }
 }

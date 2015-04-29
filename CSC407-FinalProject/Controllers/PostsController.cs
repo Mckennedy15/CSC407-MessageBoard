@@ -19,10 +19,12 @@ namespace CSC407_FinalProject.Controllers
         private MessageBoardDbContext db = new MessageBoardDbContext();
 
         private PostingService postingService;
+        private UserService userService;
 
         public PostsController()
         {
             this.postingService = new PostingService();
+            this.userService = new UserService(null);
         }
 
         public ActionResult List(int id)
@@ -30,7 +32,9 @@ namespace CSC407_FinalProject.Controllers
             var viewModel = new PostListingViewModel();
 
             viewModel.TopicId = id;
+            viewModel.User = this.userService.GetUser(User.Identity.Name);
             viewModel.Posts = this.postingService.GetPostsByTopicId(id);
+            
             return View(viewModel);
         }
 

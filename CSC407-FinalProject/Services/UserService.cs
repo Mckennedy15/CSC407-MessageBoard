@@ -20,6 +20,29 @@ namespace CSC407_FinalProject.Services
         }
 
 
+        public List<User> GetUsers()
+        {
+            return this.context.Users.ToList();
+        }
+        public User GetUser(string userName)
+        {
+            return this.context.Users.Where(x => x.Username == userName).SingleOrDefault();
+        }
+
+        public void DeleteUser(int id)
+        {
+            var user = this.context.Users.Where(x => x.Id == id).SingleOrDefault();
+            this.context.Users.Remove(user);
+            this.context.SaveChanges();
+        }
+
+        public void SaveUser(Models.User user)
+        {
+            this.context.Users.Add(user);
+            this.context.SaveChanges();
+        }
+
+
         public bool Authenticate(string username, string password)
         {
             // if username (case insensitive search) and password match
@@ -46,6 +69,7 @@ namespace CSC407_FinalProject.Services
         public void Register(User user)
         {
             user.Password = this.encryptor.Encrypt(user.Password);
+            
 
             this.context.Users.Add(user);
             this.context.SaveChanges();
