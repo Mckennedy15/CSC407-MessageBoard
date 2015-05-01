@@ -6,6 +6,7 @@
 
 <h2>Admin</h2>
 
+
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
@@ -35,8 +36,14 @@
             @Html.DisplayFor(modelItem => item.Email)
         </td>
         <td>
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-            @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+           
+           
+            @*@if (@Model.User.Admin == true)                        /////////////////////////////////////////////////////////////////////////////*@  
+           
+             @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                <span> | </span>
+             @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+            
         </td>
     </tr>
 }

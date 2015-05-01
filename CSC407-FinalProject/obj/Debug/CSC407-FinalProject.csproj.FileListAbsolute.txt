@@ -118,7 +118,6 @@ C:\Users\Matt\Desktop\CSC407-MessageBoard\CSC407-FinalProject\bin\System.Web.Web
 C:\Users\Matt\Desktop\CSC407-MessageBoard\CSC407-FinalProject\bin\System.Web.WebPages.Razor.xml
 C:\Users\Matt\Desktop\CSC407-MessageBoard\CSC407-FinalProject\bin\Antlr3.Runtime.pdb
 C:\Users\Matt\Desktop\CSC407-MessageBoard\CSC407-FinalProject\bin\Newtonsoft.Json.xml
-C:\Users\Matt\Desktop\CSC407-MessageBoard\CSC407-FinalProject\obj\Debug\CSC407-FinalProject.csprojResolveAssemblyReference.cache
 C:\Users\Matt\Desktop\CSC407-MessageBoard\CSC407-FinalProject\obj\Debug\CSC407_FinalProject.Migrations.Changedstuff.resources
 C:\Users\Matt\Desktop\CSC407-MessageBoard\CSC407-FinalProject\obj\Debug\CSC407_FinalProject.Migrations.addedTopicName.resources
 C:\Users\Matt\Desktop\CSC407-MessageBoard\CSC407-FinalProject\obj\Debug\CSC407_FinalProject.Migrations.AddedForeignKey.resources
@@ -128,3 +127,4 @@ C:\Users\Matt\Desktop\CSC407-MessageBoard\CSC407-FinalProject\obj\Debug\CSC407-F
 C:\Users\Matt\Desktop\CSC407-MessageBoard\CSC407-FinalProject\obj\Debug\CSC407-FinalProject.dll
 C:\Users\Matt\Desktop\CSC407-MessageBoard\CSC407-FinalProject\obj\Debug\CSC407-FinalProject.pdb
 C:\Users\Matt\Desktop\CSC407-MessageBoard\CSC407-FinalProject\obj\Debug\CSC407_FinalProject.Migrations.AddedTopicListView.resources
+C:\Users\Matt\Desktop\CSC407-MessageBoard\CSC407-FinalProject\obj\Debug\CSC407-FinalProject.csprojResolveAssemblyReference.cache

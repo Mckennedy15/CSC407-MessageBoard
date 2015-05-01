@@ -18,6 +18,7 @@ namespace CSC407_FinalProject.Controllers
 
         private TopicService topicService;
         private UserService userService;
+        private PostingService postingService;
 
 
 
@@ -39,19 +40,23 @@ namespace CSC407_FinalProject.Controllers
             return View(allTopics);
         }
 
-     
+
         [HttpPost]
         public ActionResult Index(string SearchString)
         {
             string searchString = SearchString;
-            var allTopics = this.topicService.GetTopic();
+            var model = new TopicListViewModel();
+            model.User = this.userService.GetUser(User.Identity.Name);
+            model.Topic = this.topicService.GetTopic();
+
             if (!String.IsNullOrEmpty(searchString))
             {
-             //  allTopics = allTopics.Where(x => x.TopicName.Contains(searchString));                      //HELPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP
-            } 
+                model.Topic = model.Topic.Where(x => x.TopicName.Contains(searchString)).ToList();
+            }
 
-            return View(allTopics);
+            return View(model);
         }
+
 
     
 
@@ -72,6 +77,7 @@ namespace CSC407_FinalProject.Controllers
 
         public ActionResult Delete(int id)
         {
+           // this.postingService.DeletePost(id);
             this.topicService.DeleteTopic(id);
             return RedirectToAction("Index", "Topics");
         }
